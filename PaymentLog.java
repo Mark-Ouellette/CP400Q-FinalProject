@@ -20,6 +20,8 @@ public class PaymentLog {
 
     private PaymentLog(Context context) {
         mPayments = new ArrayList<>();
+        mPayments.add(new Payment("Spotify", true));
+        mPayments.add(new Payment("Hydro", false));
     }
 
     public void addPayment(Payment p) {

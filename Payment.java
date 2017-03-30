@@ -25,4 +25,17 @@ public class Payment {
         mAmountPaid = amount;
         mPaid = paid;
     }
+
+    public Payment(String l, boolean paid){
+        mLabel = l;
+        mPaid = paid;
+
+    }
+
+    public String getLabel(){
+        return this.mLabel;
+    }
+    public boolean isChecked(){
+        return mPaid;
+    }
 }

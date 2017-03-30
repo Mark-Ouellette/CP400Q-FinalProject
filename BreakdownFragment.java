@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ContactChildFragment extends Fragment {
+public class BreakdownFragment extends Fragment {
 
     String mName;
     String mPhone;
     String mPhoto;
     String mtitleBarname = "";
     ImageView mPhotoView;
-    ContactFragment fragment = new ContactFragment();
+    PaymentListFragment fragment = new PaymentListFragment();
     String packagename = fragment.getClass().getPackage().getName();
 
 
@@ -24,12 +24,12 @@ public class ContactChildFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mtitleBarname = getActivity().getIntent().getStringExtra(PaymentListFragment.EXTRA_NAME);
+        /*mtitleBarname = getActivity().getIntent().getStringExtra(PaymentListFragment.EXTRA_NAME);
         getActivity().setTitle(mtitleBarname);
 
         mName = getActivity().getIntent().getStringExtra(PaymentListFragment.EXTRA_NAME);
         mPhone = getActivity().getIntent().getStringExtra(PaymentListFragment.EXTRA_PHONE);
-        mPhoto = getActivity().getIntent().getStringExtra(PaymentListFragment.EXTRA_PHOTO);
+        mPhoto = getActivity().getIntent().getStringExtra(PaymentListFragment.EXTRA_PHOTO);*/
 
     }
 

@@ -15,8 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.CheckBox;
 
 import java.util.List;
 
@@ -26,13 +26,10 @@ import java.util.List;
 
 public class PaymentListFragment extends Fragment {
 
-    private RecyclerView mContactRecyclerView;
-    private ContactAdapter mAdapter;
-    private RecyclerView.ItemDecoration mDecoration;
-    public static String EXTRA_PHONE = "pass_phone_number";
-    public static String EXTRA_NAME = "pass_name";
-    public static String EXTRA_PHOTO = "pass_photo";
-    String mtitleBarName = "Contacts";
+    private RecyclerView mPaymentRecyclerView;
+    private PaymentAdapter mAdapter;
+    public static String EXTRA_Label = "pass_reminder_label";
+    String mtitleBarName = "Payments";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,11 +39,11 @@ public class PaymentListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_payment_list, container, false);
 
-        mContactRecyclerView = (RecyclerView) view
-                .findViewById(R.id.contact_recycler_view);
-        mContactRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mPaymentRecyclerView = (RecyclerView) view
+                .findViewById(R.id.payment_recycler_view);
+        mPaymentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI();
         getActivity().setTitle(mtitleBarName);
         return view;
@@ -63,8 +60,8 @@ public class PaymentListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_item_new_contact:
-                Intent intent = new Intent(getActivity(),AddContactActivity.class);
+            case R.id.menu_item_new_payment:
+                Intent intent = new Intent(getActivity(),AddPaymentActivity.class);
                 getActivity().startActivity(intent);
                 return true;
             default:
@@ -81,7 +78,7 @@ public class PaymentListFragment extends Fragment {
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                mAdapter.removeContact(viewHolder.getAdapterPosition());
+                mAdapter.removePayment(viewHolder.getAdapterPosition());
         }
 
     };
@@ -91,86 +88,86 @@ public class PaymentListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_contact_list, menu);
+        inflater.inflate(R.menu.fragment_payment_list, menu);
     }
 
     private void updateUI() {
-        PaymentLog contactLog = PaymentLog.get(getActivity());
-        List<Contact> contacts = contactLog.getContacts();
+        PaymentLog paymentLog = PaymentLog.get(getActivity());
+        List<Payment> payments = paymentLog.getPayments();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(mContactRecyclerView);
-        mContactRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
-        mAdapter = new ContactAdapter(contacts);
-        mContactRecyclerView.setAdapter(mAdapter);
+        itemTouchHelper.attachToRecyclerView(mPaymentRecyclerView);
+        mPaymentRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+        mAdapter = new PaymentAdapter(payments);
+        mPaymentRecyclerView.setAdapter(mAdapter);
 
     }
 
-    private class ContactHolder extends RecyclerView.ViewHolder
+    private class PaymentHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private TextView mNameView;
-        private ImageView mPhotoView;
-        private Contact mContact;
+        private TextView mLabelView;
+        private CheckBox mPaidView;
+        private Payment mPayment;
 
 
-        public ContactHolder(View itemView) {
+        public PaymentHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            mNameView = (TextView) itemView.findViewById(R.id.list_item_contact_name);
-            mPhotoView = (ImageView) itemView.findViewById(R.id.contact_photo_view);
+            mLabelView = (TextView) itemView.findViewById(R.id.list_item_label_name);
+            mPaidView = (CheckBox) itemView.findViewById(R.id.payment_checkbox);
+            mPaidView.setText("Paid");
         }
 
-        public void bindContact(Contact contact) {
-            mContact = contact;
-            mNameView.setText(mContact.getFirstName() + " " + mContact.getLastName());
-            int resID = getResources().getIdentifier(mContact.getPhoto(),"drawable",this.getClass().getPackage().getName());
-            mPhotoView.setImageResource(resID);
+        public void bindPayment(Payment payment) {
+            mPayment = payment;
+            mLabelView.setText(mPayment.getLabel());
+            mPaidView.setChecked(mPayment.isChecked());
         }
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getActivity(),ContactChild.class);
-            String name = mContact.getFirstName() + " " + mContact.getLastName();
+            Intent intent = new Intent(getActivity(),Breakdown.class);
+            /*String name = mContact.getFirstName() + " " + mContact.getLastName();
             String phone = mContact.getPhoneNumber();
             String photoid = mContact.getPhoto();
             intent.putExtra(EXTRA_NAME,name);
             intent.putExtra(EXTRA_PHONE,phone);
-            intent.putExtra(EXTRA_PHOTO,photoid);
+            intent.putExtra(EXTRA_PHOTO,photoid);*/
             getActivity().startActivity(intent);
         }
     }
 
-    private class ContactAdapter extends RecyclerView.Adapter<ContactHolder>{
+    private class PaymentAdapter extends RecyclerView.Adapter<PaymentHolder>{
 
-        private List<Contact> mContacts;
+        private List<Payment> mPayments;
 
 
-        public ContactAdapter(List<Contact> contacts) {
-            mContacts = contacts;
+        public PaymentAdapter(List<Payment> payments) {
+            mPayments = payments;
         }
 
         @Override
-        public ContactHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public PaymentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
-            View view = layoutInflater.inflate(R.layout.list_item_contact, parent, false);
-            return new ContactHolder(view);
+            View view = layoutInflater.inflate(R.layout.list_item_payment, parent, false);
+            return new PaymentHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(ContactHolder holder, int position) {
-            Contact contact = mContacts.get(position);
-            holder.bindContact(contact);
+        public void onBindViewHolder(PaymentHolder holder, int position) {
+            Payment payment = mPayments.get(position);
+            holder.bindPayment(payment);
         }
 
         @Override
         public int getItemCount() {
-            return mContacts.size();
+            return mPayments.size();
         }
 
 
-        public void removeContact(int pos){
-            mContacts.remove(pos);
+        public void removePayment(int pos){
+            mPayments.remove(pos);
             this.notifyItemRemoved(pos);
         }
 

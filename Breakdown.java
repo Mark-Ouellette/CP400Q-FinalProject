@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 
-public class ContactChild extends SingleFragmentActivity {
+public class Breakdown extends SingleFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,7 +15,7 @@ public class ContactChild extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new ContactChildFragment();
+        return new BreakdownFragment();
     }
 
 }
