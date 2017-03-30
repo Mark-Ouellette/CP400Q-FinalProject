@@ -3,7 +3,7 @@ package ca.wlu.markouellette.cp400q_finalproject;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-public class ContactListActivity extends SingleFragmentActivity {
+public class PaymentListActivity extends SingleFragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +15,7 @@ public class ContactListActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new ContactListFragment();
+        return new PaymentListFragment();
     }
 
 }

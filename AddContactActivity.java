@@ -25,7 +25,7 @@ public class AddContactActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         setContentView(R.layout.activity_add_contact);
-        mContacts = ContactLog.get(this).getContacts();
+        mContacts = PaymentLog.get(this).getContacts();
 
 
         Button button= (Button) findViewById(R.id.add_contact_button);
@@ -37,7 +37,7 @@ public class AddContactActivity extends AppCompatActivity {
                 mPhone_Number = (EditText)findViewById(R.id.phone_number_entry);
 
                 mContacts.add(new Contact(mFirst_Name.getText().toString(), mLast_Name.getText().toString(),mPhone_Number.getText().toString(),mPhotoID));
-                Intent intent = new Intent (AddContactActivity.this,ContactListActivity.class);
+                Intent intent = new Intent (AddContactActivity.this,PaymentListActivity.class);
                 AddContactActivity.this.startActivity(intent);
             }
         });

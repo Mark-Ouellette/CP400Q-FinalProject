@@ -24,12 +24,12 @@ public class ContactChildFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mtitleBarname = getActivity().getIntent().getStringExtra(ContactListFragment.EXTRA_NAME);
+        mtitleBarname = getActivity().getIntent().getStringExtra(PaymentListFragment.EXTRA_NAME);
         getActivity().setTitle(mtitleBarname);
 
-        mName = getActivity().getIntent().getStringExtra(ContactListFragment.EXTRA_NAME);
-        mPhone = getActivity().getIntent().getStringExtra(ContactListFragment.EXTRA_PHONE);
-        mPhoto = getActivity().getIntent().getStringExtra(ContactListFragment.EXTRA_PHOTO);
+        mName = getActivity().getIntent().getStringExtra(PaymentListFragment.EXTRA_NAME);
+        mPhone = getActivity().getIntent().getStringExtra(PaymentListFragment.EXTRA_PHONE);
+        mPhoto = getActivity().getIntent().getStringExtra(PaymentListFragment.EXTRA_PHOTO);
 
     }
 

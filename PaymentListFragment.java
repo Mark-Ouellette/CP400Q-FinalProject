@@ -24,7 +24,7 @@ import java.util.List;
  * Created by Mark on 2017-02-12.
  */
 
-public class ContactListFragment extends Fragment {
+public class PaymentListFragment extends Fragment {
 
     private RecyclerView mContactRecyclerView;
     private ContactAdapter mAdapter;
@@ -95,7 +95,7 @@ public class ContactListFragment extends Fragment {
     }
 
     private void updateUI() {
-        ContactLog contactLog = ContactLog.get(getActivity());
+        PaymentLog contactLog = PaymentLog.get(getActivity());
         List<Contact> contacts = contactLog.getContacts();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(mContactRecyclerView);
