@@ -1,7 +1,5 @@
 package ca.wlu.markouellette.cp400q_finalproject;
 
-import java.util.Date;
-
 /**
  * Created by Mark on 2017-03-29.
  */
@@ -9,22 +7,31 @@ import java.util.Date;
 public class Payment {
 
     private String mLabel;
-    private Date mDate;
+    private long mDate;
     private double mBillAmount;
     private int mNumPeople;
-    private Date mReminderDate;
+    private long mReminderDate;
     private double mAmountPaid;
     private boolean mPaid;
 
-    public Payment(String l, Date d, double bill, int num, Date remDate, double amount, boolean paid){
+    public Payment(String l, long date, double bill, int num, long remDate, double amount, boolean paid){
         mLabel = l;
-        mDate = new Date();
+        mDate = date;
         mBillAmount = bill;
         mNumPeople = num;
         mReminderDate = remDate;
         mAmountPaid = amount;
         mPaid = paid;
     }
+    public Payment(String l, long date, int num, long remDate){
+
+        mLabel = l;
+        mDate = date ;
+        mNumPeople = num;
+        mReminderDate = remDate;
+        mPaid = false;
+    }
+
 
     public Payment(String l, boolean paid){
         mLabel = l;

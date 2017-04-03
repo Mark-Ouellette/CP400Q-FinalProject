@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class BreakdownFragment extends Fragment {
 
@@ -36,14 +35,14 @@ public class BreakdownFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_contact_child, container, false);
-        TextView name = (TextView) v.findViewById(R.id.list_child_contact_name);
+        View v = inflater.inflate(R.layout.fragment_payment_child, container, false);
+        /*TextView name = (TextView) v.findViewById(R.id.list_child_contact_name);
         name.setText(mName);
         TextView number = (TextView) v.findViewById(R.id.list_child_phone_number);
         number.setText(mPhone);
         int resID = getResources().getIdentifier(mPhoto,"drawable",packagename);
         mPhotoView = (ImageView) v.findViewById(R.id.child_photo);
-        mPhotoView.setImageResource(resID);
+        mPhotoView.setImageResource(resID);*/
         return v;
 
     }
