@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentLog {
-    
     private static PaymentLog sPaymentLog;
     private ArrayList<Payment> mPayments;
-
 
     public static PaymentLog get(Context context) {
         if (sPaymentLog == null) {
@@ -20,16 +18,18 @@ public class PaymentLog {
 
     private PaymentLog(Context context) {
         mPayments = new ArrayList<>();
-        mPayments.add(new Payment("Spotify", true));
-        mPayments.add(new Payment("Hydro", false));
+        mPayments.add(new Payment("Ian", false, 15.00));
+        mPayments.add(new Payment("Erica", false, 15.00));
     }
 
     public void addPayment(Payment p) {
         mPayments.add(p);
     }
+
     public void removePayment(Payment p){
         mPayments.remove(p);
     }
+
     public List<Payment> getPayments() {
         return mPayments;
     }

@@ -16,9 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.CheckBox;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Mark on 2017-02-12.
@@ -61,7 +63,7 @@ public class PaymentListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_new_payment:
-                Intent intent = new Intent(getActivity(),AddPaymentActivity.class);
+                Intent intent = new Intent(getActivity(), PaymentAddActivity.class);
                 getActivity().startActivity(intent);
                 return true;
             default:
@@ -105,23 +107,29 @@ public class PaymentListFragment extends Fragment {
     private class PaymentHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private TextView mLabelView;
-        private CheckBox mPaidView;
+        private TextView mContactNameView;
+        private TextView mAmountView;
+        private TextView mPaymentDateView;
         private Payment mPayment;
 
 
         public PaymentHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            mLabelView = (TextView) itemView.findViewById(R.id.list_item_label_name);
-            mPaidView = (CheckBox) itemView.findViewById(R.id.payment_checkbox);
-            mPaidView.setText("Paid");
+            mContactNameView = (TextView) itemView.findViewById(R.id.payment_item_contact_name);
+            mAmountView = (TextView) itemView.findViewById(R.id.payment_item_amount);
+            mPaymentDateView = (TextView) itemView.findViewById(R.id.payment_item_payment_date);
         }
 
         public void bindPayment(Payment payment) {
             mPayment = payment;
-            mLabelView.setText(mPayment.getLabel());
-            mPaidView.setChecked(mPayment.isChecked());
+            mContactNameView.setText(mPayment.getContactName());
+            mAmountView.setText(String.format(Locale.CANADA, "$%.2f", mPayment.getAmount()));
+            long dateAsLong = mPayment.getPaymentDate();
+            if (dateAsLong > 0) {
+                Date date = new Date(dateAsLong);
+                mPaymentDateView.setText(String.format("Due: %s", new SimpleDateFormat("dd/MM/yyyy").format(date)));
+            }
         }
 
         @Override

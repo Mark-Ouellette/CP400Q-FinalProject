@@ -5,44 +5,68 @@ package ca.wlu.markouellette.cp400q_finalproject;
  */
 
 public class Payment {
-
-    private String mLabel;
-    private long mDate;
-    private double mBillAmount;
-    private int mNumPeople;
-    private long mReminderDate;
-    private double mAmountPaid;
+    private String mContactName;
+    // true if the user owes money to the contact, false if the user is owed money by the contact
+    private boolean mPayTo;
+    private double mAmount;
+    private long mPaymentDate;
+    private String mDescription;
+    //private int mNumContributors;
     private boolean mPaid;
 
-    public Payment(String l, long date, double bill, int num, long remDate, double amount, boolean paid){
-        mLabel = l;
-        mDate = date;
-        mBillAmount = bill;
-        mNumPeople = num;
-        mReminderDate = remDate;
-        mAmountPaid = amount;
-        mPaid = paid;
-    }
-    public Payment(String l, long date, int num, long remDate){
-
-        mLabel = l;
-        mDate = date ;
-        mNumPeople = num;
-        mReminderDate = remDate;
+    public Payment(String contactName, boolean payTo, double amount, long paymentDate, String description) {
+        mContactName = contactName;
+        mPayTo = payTo;
+        mAmount = Math.round(amount * 100) / 100;
+        mPaymentDate = paymentDate;
+        mDescription = description;
         mPaid = false;
     }
 
-
-    public Payment(String l, boolean paid){
-        mLabel = l;
-        mPaid = paid;
-
+    public Payment(String contactName, boolean payTo, double amount) {
+        mContactName = contactName;
+        mPayTo = payTo;
+        mAmount = amount;
+        mPaid = false;
     }
 
-    public String getLabel(){
-        return this.mLabel;
+    public String getContactName() {
+        return mContactName;
     }
-    public boolean isChecked(){
+
+    public boolean isPayTo() {
+        return mPayTo;
+    }
+
+    public double getAmount() {
+        return mAmount;
+    }
+
+    public void setAmount(double amount) {
+        mAmount = amount;
+    }
+
+    public long getPaymentDate() {
+        return mPaymentDate;
+    }
+
+    public void setPaymentDate(long paymentDate) {
+        mPaymentDate = paymentDate;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String description) {
+        mDescription = description;
+    }
+
+    public boolean isPaid() {
         return mPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        mPaid = paid;
     }
 }
