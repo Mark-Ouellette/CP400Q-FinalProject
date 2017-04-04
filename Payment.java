@@ -12,6 +12,7 @@ public class Payment {
     private long mPaymentDate;
     private String mDescription;
     //private int mNumContributors;
+
     private boolean mPaid;
 
     public Payment(String contactName, boolean payTo, double amount, long paymentDate, String description) {

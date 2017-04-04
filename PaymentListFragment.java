@@ -30,14 +30,12 @@ public class PaymentListFragment extends Fragment {
 
     private RecyclerView mPaymentRecyclerView;
     private PaymentAdapter mAdapter;
-    public static String EXTRA_Label = "pass_reminder_label";
+    private ItemTouchHelper mItemTouchHelper;
+
+    private String packageName = this.getClass().getPackage().getName();
     String mtitleBarName = "Payments";
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,18 +44,40 @@ public class PaymentListFragment extends Fragment {
         mPaymentRecyclerView = (RecyclerView) view
                 .findViewById(R.id.payment_recycler_view);
         mPaymentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        updateUI();
+
+        List<Payment> payments = PaymentLog.get(getActivity()).getPayments();
+
+        mAdapter = new PaymentAdapter(payments);
+        mPaymentRecyclerView.setAdapter(mAdapter);
+
+        ItemTouchHelper.Callback callback = new PaymentTouchHelper(mAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(mPaymentRecyclerView);
+
+        mPaymentRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+
         getActivity().setTitle(mtitleBarName);
         return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     //on resume called when we return to this activity from child
     @Override
     public void onResume() {
         super.onResume();
-        updateUI();
+        mAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_payment_list, menu);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -71,39 +91,7 @@ public class PaymentListFragment extends Fragment {
         }
     }
 
-
-    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-        @Override
-        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-            return false;
-        }
-
-        @Override
-        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                mAdapter.removePayment(viewHolder.getAdapterPosition());
-        }
-
-    };
-
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_payment_list, menu);
-    }
-
-    private void updateUI() {
-        PaymentLog paymentLog = PaymentLog.get(getActivity());
-        List<Payment> payments = paymentLog.getPayments();
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(mPaymentRecyclerView);
-        mPaymentRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
-        mAdapter = new PaymentAdapter(payments);
-        mPaymentRecyclerView.setAdapter(mAdapter);
-
-    }
-
+    //This is where the list items are generated
     private class PaymentHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
@@ -116,6 +104,8 @@ public class PaymentListFragment extends Fragment {
         public PaymentHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+
+            // TODO Change the layout of the list item to a two row layout so that a "Paid" checkbox can be incorporated.
             mContactNameView = (TextView) itemView.findViewById(R.id.payment_item_contact_name);
             mAmountView = (TextView) itemView.findViewById(R.id.payment_item_amount);
             mPaymentDateView = (TextView) itemView.findViewById(R.id.payment_item_payment_date);
@@ -123,8 +113,12 @@ public class PaymentListFragment extends Fragment {
 
         public void bindPayment(Payment payment) {
             mPayment = payment;
+
+            //Set the relevant info for each contact
             mContactNameView.setText(mPayment.getContactName());
             mAmountView.setText(String.format(Locale.CANADA, "$%.2f", mPayment.getAmount()));
+
+            // TODO Figure out why dates aren't showing up properly (something to do with the long representation?)
             long dateAsLong = mPayment.getPaymentDate();
             if (dateAsLong > 0) {
                 Date date = new Date(dateAsLong);
@@ -134,7 +128,9 @@ public class PaymentListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getActivity(),Breakdown.class);
+            Intent intent = new Intent(getActivity(), PaymentAddActivity.class);
+            Bundle args = new Bundle();
+            //args.putSerializable();
             /*String name = mContact.getFirstName() + " " + mContact.getLastName();
             String phone = mContact.getPhoneNumber();
             String photoid = mContact.getPhoto();
@@ -145,7 +141,7 @@ public class PaymentListFragment extends Fragment {
         }
     }
 
-    private class PaymentAdapter extends RecyclerView.Adapter<PaymentHolder>{
+    private class PaymentAdapter extends RecyclerView.Adapter<PaymentHolder> {
 
         private List<Payment> mPayments;
 
@@ -174,7 +170,7 @@ public class PaymentListFragment extends Fragment {
         }
 
 
-        public void removePayment(int pos){
+        public void removePayment(int pos) {
             mPayments.remove(pos);
             this.notifyItemRemoved(pos);
         }
@@ -207,5 +203,26 @@ public class PaymentListFragment extends Fragment {
             }
         }
 
+    }
+
+    public class PaymentTouchHelper extends ItemTouchHelper.SimpleCallback {
+        private PaymentAdapter mPaymentAdapter;
+
+        public PaymentTouchHelper(PaymentAdapter paymentAdapter) {
+            super(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+            this.mPaymentAdapter = paymentAdapter;
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            // Commented section allows the user to move the items in the list. We disable since it is an ordered list
+            //mPaymentAdapter.move(viewHolder.getAdapterPosition(),target.getAdapterPosition());
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            mPaymentAdapter.removePayment(viewHolder.getAdapterPosition());
+        }
     }
 }
