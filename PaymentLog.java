@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class PaymentLog {
     private static PaymentLog sPaymentLog;
@@ -32,6 +33,15 @@ public class PaymentLog {
 
     public List<Payment> getPayments() {
         return mPayments;
+    }
+
+    public Payment getPayment(UUID id) {
+        for (Payment p : mPayments) {
+            if (p.getId() == id) {
+                return p;
+            }
+        }
+        return null;
     }
 
 

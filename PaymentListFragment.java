@@ -130,6 +130,7 @@ public class PaymentListFragment extends Fragment {
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), PaymentAddActivity.class);
             Bundle args = new Bundle();
+
             //args.putSerializable();
             /*String name = mContact.getFirstName() + " " + mContact.getLastName();
             String phone = mContact.getPhoneNumber();
