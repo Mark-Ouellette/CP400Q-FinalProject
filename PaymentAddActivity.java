@@ -11,6 +11,8 @@ public class PaymentAddActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new PaymentAddFragment();
+        PaymentAddFragment p = new PaymentAddFragment();
+        p.setArguments(this.getIntent().getBundleExtra(PaymentAddFragment.EXISTING_PAYMENT_BUNDLE));
+        return p;
     }
 }

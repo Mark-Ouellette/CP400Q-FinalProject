@@ -37,7 +37,7 @@ public class PaymentLog {
 
     public Payment getPayment(UUID id) {
         for (Payment p : mPayments) {
-            if (p.getId() == id) {
+            if (p.getId().compareTo(id) == 0) {
                 return p;
             }
         }

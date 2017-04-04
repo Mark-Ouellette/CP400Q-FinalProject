@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public class Payment {
     private UUID mId;
+
     private String mContactName;
     // true if the user owes money to the contact, false if the user is owed money by the contact
     private boolean mPayTo;
@@ -46,8 +47,16 @@ public class Payment {
         return mContactName;
     }
 
+    public void setContactName(String contactName) {
+        mContactName = contactName;
+    }
+
     public boolean isPayTo() {
         return mPayTo;
+    }
+
+    public void setPayTo(boolean payTo) {
+        mPayTo = payTo;
     }
 
     public double getAmount() {

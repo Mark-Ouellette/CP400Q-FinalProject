@@ -128,16 +128,14 @@ public class PaymentListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+            //This is currently directed to the PaymentAddActivity (as an edit payment screen)
+            //Once the PaymentActivity (BreakdownActivity) is ready we will direct to that view screen
+            //This activity will then have an edit payment button which will pass the PaymentAddActivity
             Intent intent = new Intent(getActivity(), PaymentAddActivity.class);
             Bundle args = new Bundle();
+            args.putSerializable(PaymentAddFragment.EXISTING_PAYMENT, mPayment.getId());
+            intent.putExtra(PaymentAddFragment.EXISTING_PAYMENT_BUNDLE, args);
 
-            //args.putSerializable();
-            /*String name = mContact.getFirstName() + " " + mContact.getLastName();
-            String phone = mContact.getPhoneNumber();
-            String photoid = mContact.getPhoto();
-            intent.putExtra(EXTRA_NAME,name);
-            intent.putExtra(EXTRA_PHONE,phone);
-            intent.putExtra(EXTRA_PHOTO,photoid);*/
             getActivity().startActivity(intent);
         }
     }
