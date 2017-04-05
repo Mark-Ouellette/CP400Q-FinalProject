@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CP400Q - Final Project</string>
+    <string name="new_payment">New Payment</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="contact_first_name">First Name...</string>
+    <string name="contact_last_name">Last Name...</string>
+    <string name="contact_phone">Phone Number...</string>
+</resources>
