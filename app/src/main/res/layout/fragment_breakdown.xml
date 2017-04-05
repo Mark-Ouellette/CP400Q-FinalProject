@@ -1,51 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <EditText
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
-        android:id="@+id/breakdown_payment_label" />
+        android:gravity="top"
+        android:orientation="vertical">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/breakdown_payment_amount"
-        android:layout_weight="1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <CalendarView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/breakdown_payment_due_date" />
+            <TextView
+                android:id="@+id/contact_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact Name: "
+                android:textSize="18sp"/>
 
-    <NumberPicker
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/breakdown_group_size" />
+            <TextView
+                android:id="@+id/contact_name_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18sp"/>
 
-    <CalendarView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/breakdown_reminder_date" />
+        </LinearLayout>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/breakdown_amount_paid" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <CheckBox
-        android:text="CheckBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/breakdown_is_paid" />
+            <TextView
+                android:id="@+id/payment_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment Amount: "
+                android:textSize="18sp"/>
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/payment_amount_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/payment_pay_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Owing or Recieving: "
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/payment_pay_to_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18sp"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/payment_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Due Date: "
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/payment_date_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Due Date: "
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/payment_num_contributors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Number of contributors: "
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/payment_num_contributors_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Number of contributors: "
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/payment_reminder_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reminder Date and Time: "
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/payment_reminder_date_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/payment_reminder_time_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/payment_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description: "
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/payment_description_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/payment_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EDITTTT PAYMENTTTT"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

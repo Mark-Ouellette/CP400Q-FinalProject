@@ -43,7 +43,7 @@
 
             <EditText
                 android:id="@+id/payment_add_amount"
-                android:layout_width="0sp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -62,12 +62,24 @@
                 android:text="Owing or Recieving?"
                 android:textSize="18sp"/>
 
-            <RadioButton
-                android:text="RadioButton"
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/payment_add_pay_to"
-                android:layout_weight="1" />
+                android:orientation="horizontal">
+                <RadioButton
+                    android:text="Payer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/payer"
+                    android:layout_weight="1" />
+                <RadioButton
+                    android:text="Payee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/payee"
+                    android:layout_weight="1" />
+            </RadioGroup>
+
 
         </LinearLayout>
 
@@ -112,8 +124,43 @@
 
             <SeekBar
                 android:id="@+id/payment_add_num_contributors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".95"/>
+
+            <TextView
+                android:layout_width="22dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/contributorsValue"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/payment_add_reminder_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reminder Date and Time: "
+                android:textSize="18sp"/>
+
+            <DatePicker
+                android:id="@+id/payment_add_reminder_date"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="94dp"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:spinnersShown="true"/>
+
+            <TimePicker
+                android:layout_width="match_parent"
+                android:layout_height="94dp"
+                android:timePickerMode="spinner"
+                android:id="@+id/payment_add_reminder_time"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
@@ -130,7 +177,7 @@
 
             <EditText
                 android:id="@+id/payment_add_description"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
