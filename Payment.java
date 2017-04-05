@@ -1,6 +1,5 @@
 package ca.wlu.markouellette.cp400q_finalproject;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -10,53 +9,54 @@ import java.util.UUID;
 public class Payment {
     private UUID mId;
 
-    private String mContactName;
+    private String mLabel;
     // true if the user owes money to the contact, false if the user is owed money by the contact
-    private boolean mPayTo;
+    private boolean mIsPayTo;
     private double mAmount;
     private long mPaymentDate;
+    private long mReminderDate;
+    private long mReminderTime;
     private String mDescription;
-    //private int mNumContributors;
-    private HashMap<String, Double> mContributors;
+    private boolean mIsPaid;
 
-    private boolean mPaid;
-
-    public Payment(String contactName, boolean payTo, double amount, long paymentDate, String description) {
+    public Payment(String label, boolean isPayTo, double amount, long paymentDate, long reminderDate, long reminderTime, String description) {
         mId = UUID.randomUUID();
-        mContactName = contactName;
-        mPayTo = payTo;
+        mLabel = label;
+        mIsPayTo = isPayTo;
         mAmount = Math.round(amount * 100) / 100;
         mPaymentDate = paymentDate;
+        mReminderDate = reminderDate;
+        mReminderTime = reminderTime;
         mDescription = description;
-        mPaid = false;
+        mIsPaid = false;
     }
 
-    public Payment(String contactName, boolean payTo, double amount) {
+    public Payment(String label, boolean isPayTo, double amount) {
         mId = UUID.randomUUID();
-        mContactName = contactName;
-        mPayTo = payTo;
+        mLabel = label;
+        mIsPayTo = isPayTo;
         mAmount = amount;
-        mPaid = false;
+        mIsPaid = false;
     }
 
     public UUID getId() {
         return mId;
     }
 
-    public String getContactName() {
-        return mContactName;
+    public String getLabel() {
+        return mLabel;
     }
 
-    public void setContactName(String contactName) {
-        mContactName = contactName;
+    public void setLabel(String label) {
+        mLabel = label;
     }
 
     public boolean isPayTo() {
-        return mPayTo;
+        return mIsPayTo;
     }
 
     public void setPayTo(boolean payTo) {
-        mPayTo = payTo;
+        mIsPayTo = payTo;
     }
 
     public double getAmount() {
@@ -75,6 +75,22 @@ public class Payment {
         mPaymentDate = paymentDate;
     }
 
+    public long getReminderDate() {
+        return mReminderDate;
+    }
+
+    public void setReminderDate(long reminderDate) {
+        mReminderDate = reminderDate;
+    }
+
+    public long getReminderTime() {
+        return mReminderTime;
+    }
+
+    public void setReminderTime(long reminderTime) {
+        mReminderTime = reminderTime;
+    }
+
     public String getDescription() {
         return mDescription;
     }
@@ -84,10 +100,10 @@ public class Payment {
     }
 
     public boolean isPaid() {
-        return mPaid;
+        return mIsPaid;
     }
 
     public void setPaid(boolean paid) {
-        mPaid = paid;
+        mIsPaid = paid;
     }
 }

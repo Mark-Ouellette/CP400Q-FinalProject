@@ -35,9 +35,14 @@ public class PaymentLog {
         return mPayments;
     }
 
-    public Payment getPayment(UUID id) {
+    //This function would be used by any screen displaying a list of the payments' contributors
+    /*public HashMap<String, Double> getContributors(UUID paymentId) {
+        //SQL query get Contributors with UUID of payment
+    }*/
+
+    public Payment getPayment(UUID paymentId) {
         for (Payment p : mPayments) {
-            if (p.getId().compareTo(id) == 0) {
+            if (p.getId().compareTo(paymentId) == 0) {
                 return p;
             }
         }
