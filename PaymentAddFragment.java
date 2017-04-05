@@ -70,8 +70,8 @@ public class PaymentAddFragment extends Fragment {
             mPayTo.setChecked(mExistingPayment.isPayTo());
             //TODO Don't use the setMaxDate function, check online for proper implementation
             mPaymentDate.setMaxDate(mExistingPayment.getPaymentDate());
-            mReminderDate.setMaxDate(mExistingPayment.getReminderDate());
-            mReminderTime.getDrawingTime();
+            //mReminderDate.setMaxDate(mExistingPayment.getReminderDate());
+            //mReminderTime.getDrawingTime();
             //TODO link this line to the numContributors of the Payment class when it is implemented
             mNumContributors.setProgress(1);
             mDescription.setText(mExistingPayment.getDescription());
@@ -86,8 +86,8 @@ public class PaymentAddFragment extends Fragment {
                 boolean payTo = mPayTo.isActivated();
                 double amount = Double.parseDouble(mAmount.getText().toString());
                 long paymentDate = mPaymentDate.getMaxDate();
-                long reminderDate = mReminderDate.getMaxDate();
-                long reminderTime = mReminderTime.getDrawingTime();
+                //long reminderDate = mReminderDate.getMaxDate();
+                //long reminderTime = mReminderTime.getDrawingTime();
                 String description = mDescription.getText().toString().trim();
 
                 //TODO error checking doesn't work.
@@ -104,7 +104,7 @@ public class PaymentAddFragment extends Fragment {
                         mExistingPayment.setDescription(description);
                     } else {
                         PaymentLog paymentLog = PaymentLog.get(getContext());
-                        Payment p = new Payment(contactName, payTo, amount, paymentDate, reminderDate, reminderTime, description);
+                        Payment p = new Payment(contactName, payTo, amount, paymentDate, 1, 1, description);
                         paymentLog.addPayment(p);
                     }
                     getActivity().finish();
