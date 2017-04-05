@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.UUID;
@@ -23,10 +24,12 @@ public class PaymentAddFragment extends Fragment {
     public static final int MAX_CONTRIBUTORS = 9;
 
     private Payment mExistingPayment;
-    private EditText mContactName;
+    private EditText mLabel;
     private EditText mAmount;
     private CheckBox mPayTo;
     private DatePicker mPaymentDate;
+    private DatePicker mReminderDate;
+    private TimePicker mReminderTime;
     private SeekBar mNumContributors;
     private EditText mDescription;
     private Button mPaymentAddButton;
@@ -48,10 +51,12 @@ public class PaymentAddFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_payment_add, container, false);
-        mContactName = (EditText) v.findViewById(R.id.payment_add_contact_name);
+        mLabel = (EditText) v.findViewById(R.id.payment_add_contact_name);
         mAmount = (EditText) v.findViewById(R.id.payment_add_amount);
         mPayTo = (CheckBox) v.findViewById(R.id.payment_add_pay_to);
         mPaymentDate = (DatePicker) v.findViewById(R.id.payment_add_payment_date);
+        //mReminderDate =
+        //mReminderTime =
         mNumContributors = (SeekBar) v.findViewById(R.id.payment_add_num_contributors);
         mNumContributors.setMax(MAX_CONTRIBUTORS);
         mDescription = (EditText) v.findViewById(R.id.payment_add_description);
@@ -60,10 +65,13 @@ public class PaymentAddFragment extends Fragment {
 
         // An existing payment item was passed to this fragment, fill out the fields and change the button label
         if (!(mExistingPayment == null)) {
-            mContactName.setText(mExistingPayment.getContactName());
+            mLabel.setText(mExistingPayment.getLabel());
             mAmount.setText(Double.toString(mExistingPayment.getAmount()));
             mPayTo.setChecked(mExistingPayment.isPayTo());
+            //TODO Don't use the setMaxDate function, check online for proper implementation
             mPaymentDate.setMaxDate(mExistingPayment.getPaymentDate());
+            mReminderDate.setMaxDate(mExistingPayment.getReminderDate());
+            mReminderTime.getDrawingTime();
             //TODO link this line to the numContributors of the Payment class when it is implemented
             mNumContributors.setProgress(1);
             mDescription.setText(mExistingPayment.getDescription());
@@ -74,26 +82,29 @@ public class PaymentAddFragment extends Fragment {
         mPaymentAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String contactName = mContactName.getText().toString().trim();
+                String contactName = mLabel.getText().toString().trim();
                 boolean payTo = mPayTo.isActivated();
                 double amount = Double.parseDouble(mAmount.getText().toString());
                 long paymentDate = mPaymentDate.getMaxDate();
+                long reminderDate = mReminderDate.getMaxDate();
+                long reminderTime = mReminderTime.getDrawingTime();
                 String description = mDescription.getText().toString().trim();
 
+                //TODO error checking doesn't work.
                 //If key fields are left entry, do not allow the user to proceed.
                 if (contactName == "" || amount <= 0) {
                     Toast.makeText(getActivity(), "Please ensure the Contact Name and Amount are filled", Toast.LENGTH_LONG).show();
                 } else {
                     //If this is an edit, set payment fields. Otherwise create and add new payment
                     if (!(mExistingPayment == null)) {
-                        mExistingPayment.setContactName(contactName);
+                        mExistingPayment.setLabel(contactName);
                         mExistingPayment.setPayTo(payTo);
                         mExistingPayment.setAmount(amount);
                         mExistingPayment.setPaymentDate(paymentDate);
                         mExistingPayment.setDescription(description);
                     } else {
                         PaymentLog paymentLog = PaymentLog.get(getContext());
-                        Payment p = new Payment(contactName, payTo, amount, paymentDate, description);
+                        Payment p = new Payment(contactName, payTo, amount, paymentDate, reminderDate, reminderTime, description);
                         paymentLog.addPayment(p);
                     }
                     getActivity().finish();

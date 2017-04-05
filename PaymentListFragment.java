@@ -1,9 +1,6 @@
 package ca.wlu.markouellette.cp400q_finalproject;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,9 +27,7 @@ public class PaymentListFragment extends Fragment {
 
     private RecyclerView mPaymentRecyclerView;
     private PaymentAdapter mAdapter;
-    private ItemTouchHelper mItemTouchHelper;
 
-    private String packageName = this.getClass().getPackage().getName();
     String mtitleBarName = "Payments";
 
 
@@ -54,7 +49,10 @@ public class PaymentListFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(mPaymentRecyclerView);
 
-        mPaymentRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+        //Add divider lines between each list item
+        android.support.v7.widget.DividerItemDecoration dividerItemDecoration
+                = new android.support.v7.widget.DividerItemDecoration(mPaymentRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
+        mPaymentRecyclerView.addItemDecoration(dividerItemDecoration);
 
         getActivity().setTitle(mtitleBarName);
         return view;
@@ -95,7 +93,7 @@ public class PaymentListFragment extends Fragment {
     private class PaymentHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private TextView mContactNameView;
+        private TextView mLabelView;
         private TextView mAmountView;
         private TextView mPaymentDateView;
         private Payment mPayment;
@@ -106,7 +104,7 @@ public class PaymentListFragment extends Fragment {
             itemView.setOnClickListener(this);
 
             // TODO Change the layout of the list item to a two row layout so that a "Paid" checkbox can be incorporated.
-            mContactNameView = (TextView) itemView.findViewById(R.id.payment_item_contact_name);
+            mLabelView = (TextView) itemView.findViewById(R.id.payment_item_contact_name);
             mAmountView = (TextView) itemView.findViewById(R.id.payment_item_amount);
             mPaymentDateView = (TextView) itemView.findViewById(R.id.payment_item_payment_date);
         }
@@ -115,8 +113,8 @@ public class PaymentListFragment extends Fragment {
             mPayment = payment;
 
             //Set the relevant info for each contact
-            mContactNameView.setText(mPayment.getContactName());
-            mAmountView.setText(String.format(Locale.CANADA, "$%.2f", mPayment.getAmount()));
+            mLabelView.setText(mPayment.getLabel());
+            mAmountView.setText(String.format(Locale.CANADA, "%.2f", mPayment.getAmount()));
 
             // TODO Figure out why dates aren't showing up properly (something to do with the long representation?)
             long dateAsLong = mPayment.getPaymentDate();
@@ -141,9 +139,7 @@ public class PaymentListFragment extends Fragment {
     }
 
     private class PaymentAdapter extends RecyclerView.Adapter<PaymentHolder> {
-
         private List<Payment> mPayments;
-
 
         public PaymentAdapter(List<Payment> payments) {
             mPayments = payments;
@@ -168,40 +164,11 @@ public class PaymentListFragment extends Fragment {
             return mPayments.size();
         }
 
-
+        //TODO remove from PaymentLog not actual array
         public void removePayment(int pos) {
             mPayments.remove(pos);
             this.notifyItemRemoved(pos);
         }
-
-    }
-
-    public class DividerItemDecoration extends RecyclerView.ItemDecoration {
-        private Drawable mDivider;
-
-        public DividerItemDecoration(Context context) {
-            mDivider = context.getResources().getDrawable(R.drawable.line_divider);
-        }
-
-        @Override
-        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            int left = parent.getPaddingLeft();
-            int right = parent.getWidth() - parent.getPaddingRight();
-
-            int numChildren = parent.getChildCount();
-            for (int i = 0; i < numChildren; i++) {
-                View child = parent.getChildAt(i);
-
-                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-
-                int top = child.getBottom() + params.bottomMargin;
-                int bottom = top + mDivider.getIntrinsicHeight();
-
-                mDivider.setBounds(left, top, right, bottom);
-                mDivider.draw(c);
-            }
-        }
-
     }
 
     public class PaymentTouchHelper extends ItemTouchHelper.SimpleCallback {
