@@ -8,9 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -26,7 +26,7 @@ public class PaymentAddFragment extends Fragment {
     private Payment mExistingPayment;
     private EditText mLabel;
     private EditText mAmount;
-    private CheckBox mPayTo;
+    private RadioButton mPayTo;
     private DatePicker mPaymentDate;
     private DatePicker mReminderDate;
     private TimePicker mReminderTime;
@@ -53,7 +53,7 @@ public class PaymentAddFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_payment_add, container, false);
         mLabel = (EditText) v.findViewById(R.id.payment_add_contact_name);
         mAmount = (EditText) v.findViewById(R.id.payment_add_amount);
-        mPayTo = (CheckBox) v.findViewById(R.id.payment_add_pay_to);
+        mPayTo = (RadioButton) v.findViewById(R.id.payment_add_pay_to);
         mPaymentDate = (DatePicker) v.findViewById(R.id.payment_add_payment_date);
         //mReminderDate =
         //mReminderTime =
